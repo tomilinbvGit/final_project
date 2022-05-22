@@ -19,4 +19,12 @@ class PageObject(BasePage):
         print(price.text)
         cost_basket = self.browser.find_element(*ProductPageLocators.COST_BASKET)
         print(cost_basket.text)
-        assert price.text == cost_basket.text, 'The price is not equal to the cost of the bascet'
+        assert price.text == cost_basket.text, 'The price is not equal to the cost of the basKet'
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def message_should_disappear_after_adding_product_to_basket(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Message should disappear"

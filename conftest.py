@@ -13,7 +13,6 @@ def browser(request):
     lang = request.config.getoption('language')
     options = Options()
     options.add_experimental_option('prefs', {'intl.accept_languages': lang})
-    options.add_argument('headless')
     browser = webdriver.Chrome(options=options)
     yield browser
     print("\nquit browser..")
