@@ -1,8 +1,8 @@
-from base_page import BasePage
-from pages.locators import BasketPageLocator
+from .base_page import BasePage
+from .locators import BasketPageLocators
 
 
 class BasketPage(BasePage):
     def should_not_be_products(self):
-        assert self.is_not_element_present(*BasketPageLocator.BASKET), \
+        assert self.is_not_element_present(*BasketPageLocators.BASKET_EMPTY), \
             "Should be empty basket"
