@@ -5,6 +5,7 @@ from .pages.login_page import LoginPage
 import pytest
 
 
+#параметризация
 @pytest.mark.need_review
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
@@ -19,6 +20,7 @@ import pytest
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9",
                                   ])
 def test_guest_can_add_product_to_basket(browser, link):
+    #проверка добавления в корзину, получение кода, проверка сообщения и цены
     page = PageObject(browser, link)
     page.open()
     page.add_button()
@@ -27,6 +29,7 @@ def test_guest_can_add_product_to_basket(browser, link):
     page.should_be_price_eq_cost_basket()
 
 
+#проверка, что корзина пуста после перехода со страницы продукта
 @pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
@@ -37,6 +40,7 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket_page.should_not_be_products()
 
 
+#проверка перехода со страницы продукта на страницу авторизации
 @pytest.mark.need_review
 def test_guest_can_go_to_login_page_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
@@ -47,6 +51,7 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
 
 @pytest.mark.need_review
 class TestUserAddToBasketFromProductPage():
+    #авторизация пользователя перед выполнением теста
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
         link = 'http://selenium1py.pythonanywhere.com/accounts/login/'
@@ -56,6 +61,7 @@ class TestUserAddToBasketFromProductPage():
         self.page.register_new_user(email, 'fgdfgdfg123!@#$%^&&&&')
         self.page.should_be_authorized_user()
 
+    #проверка добавления в корзину, получение кода, проверка сообщения и цены после авторизации пользователя
     def test_user_can_add_product_to_basket(self, browser):
         link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019'
         page = PageObject(browser, link)
